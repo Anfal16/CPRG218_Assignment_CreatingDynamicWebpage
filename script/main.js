@@ -9,7 +9,8 @@
  * 7.) There are 3 task in this that you have to complete. Discuss with your instructor to understand the task.
  */
 
-const myApiKey = ""; // <<-- ADD YOUR API KEY HERE. DELETE THIS KEY before uploading your code on Github or Brightspace, 
+const myApiKey = "20e7940f"; // <<-- ADD YOUR API KEY HERE. DELETE THIS KEY
+//  before uploading your code on Github or Brightspace, 
 
 const BASE_URL = "http://www.omdbapi.com";
 
@@ -125,6 +126,13 @@ async function getMovies(movieTitle) {
              * Else write a for loop which will iterator over filteredMovies array 
              * and call createMovieCard() for each movie object in this array.
              */
+            if (filteredMovies.length === 0) {
+                createEmptyView();
+            } else {
+                for (let movie of filteredMovies) {
+                    createMovieCard(movie);
+                }
+            }
 
         }
     } catch(exception) {
@@ -162,16 +170,20 @@ async function checkPosterURL(movie) {
  * 
  *      <p class="noresult">No movie found!!! Please search for another title.</p>
  */
-function createEmptyView() {
-    console.log("createEmptyView");
+
 
     /**
      * TASK : 2
      * Create empty view and append it to "movieCards" section.
      */
-
+    function createEmptyView() {
+    console.log("createEmptyView");
+    const p = document.createElement("p");
+    p.classList.add("noresult");
+    p.textContent = "No movie found!! Please search for another title.";
+    const movieCardsSection = document.getElementById("movieCards");
+    movieCardsSection.appendChild(p);
 }
-
 /**
  * Create a movie card using the parameter. The card should have movie title and poster. The card should follow below structure:
  *      <article class="card">
@@ -186,10 +198,35 @@ function createEmptyView() {
 function createMovieCard(movie) {
     console.log("createMovieCard");
     console.log(movie);
-    
+}
     /**
      * TASK : 3
      * Create Movie Card and append it "movieCards" section.
      */
+    function createMovieCard(movie) {
+        const movieCardsSection = document.getElementById("movieCards");
 
-}
+        const article = document.createElement("article");
+        article.classList.add("card");
+
+        const title = document.createElement("p");
+        title.classList.add("cardTitle");
+        title.textContent = movie.Title;
+
+        const posterDiv = document.createElement("div");
+        posterDiv.classList.add("cardPosterDiv");
+
+        const img = document.createElement("img");
+        img.classList.add("moviePoster");
+        img.src = movie.Poster;
+        img.alt = "Movie Poster";
+
+        posterDiv.appendChild(img);
+
+        article.appendChild(title);
+
+        article.appendChild(posterDiv);
+
+        movieCardsSection.appendChild(article);
+    }
+    
